@@ -1,2 +1,2 @@
 # SpacePartition
-A retro-style fully differentiable renderer and AI game.
+A retro-style renderer bullet hell game written in Java.
