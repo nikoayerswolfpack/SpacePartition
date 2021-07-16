@@ -50,7 +50,7 @@ public class World {
 
     public Level currentLevel() {
         //TODO: DEFINE LEVEL
-
+        return null;
     }
 
 }
