@@ -1,5 +1,10 @@
 package engine;
 
+
+/**
+ *
+ * @author Leo
+ */
 public class Vec2 {
 
     public double x;

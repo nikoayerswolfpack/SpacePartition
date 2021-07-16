@@ -1,12 +1,20 @@
 package bsp3d;
 
-import engine.*;
-import java.awt.*;
-import java.io.*;
+import java.awt.Graphics2D;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
+import engine.*;
 
+/**
+ *
+ * @author Leo
+ */
 public class Node implements Serializable {
 
     private int level;
@@ -19,36 +27,55 @@ public class Node implements Serializable {
 
     public void preProcess(int level, List<Triangle> ts) {
         this.level = level;
-
+        System.out.println("Processing level " + level + " ...");
         if (ts.isEmpty()) return;
+
+        //Collections.shuffle(ts);
 
         int bestIndex = 0;
         int bestScore = Integer.MAX_VALUE;
+        if (1 == 1) {
 
-        int leftCount = 0;
-        int rightCount = 0;
-        double bestBalanceScore = Double.MAX_VALUE;
-        for (int i = 0; i < ts.size(); i++) {
-            int fragmentationCount = 0;
-            Triangle t = ts.remove(0);
-            plane = new Plane(t);
-            for (Triangle t2 : ts) {
-                if (plane.isOnSamePlane(t2, planeThickness)) {
-                    continue;
+            int leftCount = 0;
+            int rightCount = 0;
+            double bestBalanceScore = Double.MAX_VALUE;
+            for (int i = 0; i < ts.size(); i++) {
+                int fragmentationCount = 0;
+                Triangle t = ts.remove(0);
+                plane = new Plane(t);
+                for (Triangle t2 : ts) {
+                    if (plane.isOnSamePlane(t2, planeThickness)) {
+                        continue;
+                    }
+                    List<Triangle> cb = plane.clipBack(t2);
+                    leftCount += cb.size();
+                    fragmentationCount += cb.size() > 1 ? 1 : 0;
+                    List<Triangle> cf = plane.clipFront(t2);
+                    rightCount += cf.size();
+                    fragmentationCount += cf.size() > 1 ? 1 : 0;
                 }
-                List<Triangle> cb = plane.clipBack(t2);
-                leftCount += cb.size();
-                fragmentationCount += cb.size() > 1 ? 1 : 0;
-                List<Triangle> cf = plane.clipFront(t2);
-                rightCount += cf.size();
-                fragmentationCount += cf.size() > 1 ? 1 : 0;
-            }
 
-            if (fragmentationCount < bestScore) {
-                bestScore = fragmentationCount;
-                bestIndex = i;
+                // try to find the partition triangle that results in most balanced tree
+                if (1 == 0) {
+                    double scoreTotal = leftCount + rightCount;
+                    double scoreLeft = leftCount / scoreTotal;
+                    double scoreRight = rightCount / scoreTotal;
+                    double score = Math.abs(scoreLeft - scoreRight);
+                    if (score < bestBalanceScore) {
+                        bestBalanceScore = score;
+                        bestIndex = i;
+                    }
+                }
+                // try to find the triangle plane with less fragmentation
+                else if (fragmentationCount < bestScore) {
+                    bestScore = fragmentationCount;
+                    bestIndex = i;
+                }
+                ts.add(t);
             }
-            ts.add(t);
+        }
+        else {
+            bestIndex = (int) (ts.size() * Math.random());
         }
 
         Triangle triangle = ts.remove(bestIndex);
@@ -82,7 +109,6 @@ public class Node implements Serializable {
             back = new Node();
             back.preProcess(level + 1, backTriangles);
         }
-
     }
 
     public static int maxCount = 10000;
@@ -97,28 +123,35 @@ public class Node implements Serializable {
             if (front != null) {
                 front.transverse(observer, g);
             }
-            for (Triangle t : triangles) {
-                t.draw3D(g, observer);
-                count++;
-            }
-            if (back != null) {
-                back.transverse(observer, g);
-            }
         }
         else {
             if (back != null) {
                 back.transverse(observer, g);
             }
-            for (Triangle t : triangles) {
-                t.draw3D(g, observer);
-                count++;
+        }
+
+        for (Triangle t : triangles) {
+            //System.out.println(count++ + " front to back " + t);
+            t.draw3D(g, observer);
+            count++;
+        }
+
+        //if (count > maxCount) return;
+
+        if (!isFront) {
+            if (back != null) {
+                back.transverse(observer, g);
             }
+        }
+        else {
             if (front != null) {
                 front.transverse(observer, g);
             }
         }
 
-
+//        if (level == 0) {
+//            System.out.println("drawing " + count + " polygons");
+//        }
 
     }
 
@@ -140,4 +173,6 @@ public class Node implements Serializable {
         ois.close();
         return node;
     }
+
+
 }

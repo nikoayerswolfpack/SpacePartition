@@ -1,25 +1,36 @@
 package bsp3d;
 
-import engine.*;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Area;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
+import engine.*;
+import importer.WavefrontParser;
+
+/**
+ * @author Leonardo Ono (ono.leo80@gmail.com)
+ */
 public class Controller extends Canvas implements KeyListener, MouseListener, MouseMotionListener {
-
     private boolean[] keys = new boolean[256];
     private BufferedImage offscreenImage;
     private int[] offscreenImageBuffer;
     private BufferStrategy bs;
 
-
     private Node bspNode;
-    private Color backgroundColor = new Color(0, 0, 0);
+    private Color backgroundColor = new Color(0, 0, 0, 0);
     private int renderMode = 1;
 
     private Observer observer = new Observer();
@@ -30,8 +41,35 @@ public class Controller extends Canvas implements KeyListener, MouseListener, Mo
     }
 
     public void start() {
+        if (1 == 1) {
+            try {
+                //WavefrontParser.load("/res/Doom_E1M1.obj", 1.0);
+                WavefrontParser.load("/res/test3.obj", 1.0);
+                //WavefrontParser.load("/res/test4.obj", 1.0);
+                //WavefrontParser.load("/res/test5.obj", 1.0);
+                //WavefrontParser.load("/res/quake.obj", 1.0);
 
-        /*TODO: IMPORT GAME WORLD MODEL HERE*/
+                System.out.println(WavefrontParser.obj.faces.size());
+                bspNode = new Node();
+                bspNode.preProcess(0, WavefrontParser.obj.faces);
+            } catch (Exception ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+//            try {
+//                Node.save("d:/quake.preproc", bspNode);
+//            } catch (Exception ex) {
+//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//                System.exit(-1);
+//            }
+        }
+        else {
+            try {
+                bspNode = Node.load(getClass().getResourceAsStream("/res/quake.preproc"));
+            } catch (Exception ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                System.exit(-1);
+            }
+        }
 
         createBufferStrategy(2);
         bs = getBufferStrategy();
@@ -40,43 +78,40 @@ public class Controller extends Canvas implements KeyListener, MouseListener, Mo
             public void run() {
                 boolean running = true;
                 while (running) {
-                    update(); /*TODO: IMPLEMENT UPDATE LOOP*/
-
+                    update();
                     Graphics2D g = (Graphics2D) bs.getDrawGraphics();
                     draw((Graphics2D) offscreenImage.getGraphics());
                     g.clearRect(0, 0, getWidth(), getHeight());
                     g.drawImage(offscreenImage, 0, 0, getWidth(), getHeight(), null);
                     g.dispose();
-
                     bs.show();
 
                     try {
                         Thread.sleep(1);
-                    } catch(InterruptedException ex) {
-
+                    } catch (InterruptedException ex) {
                     }
                 }
             }
+
         }).start();
 
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
-
     }
 
 
-    private Vec3 speed = new Vec3();
 
+    private Vec3 speed = new Vec3();
     private void update() {
+        //double speed = 0.05;
         speed.set(0, 0, 0);
 
         if (mousePressed) {
             double ry = mouseDrag.x - mouseClicked.x;
             double rx = mouseDrag.y - mouseClicked.y;
-
-            observer.angleY += 0.5 * ((mousePressedPlayerAngleY + 0.01 * ry) - observer.angleY);
-            observer.angleX += 0.5 * ((mousePressedPlayerAngleX + 0.01 * rx) - observer.angleX);
+            observer.angleY += 0.5 * ((mousePressedObserverAngleY + 0.01 * ry) - observer.angleY);
+            observer.angleX += 0.5 * ((mousePressedObserverAngleX + 0.01 * rx) - observer.angleX);
         }
 
         if (keys[KeyEvent.VK_Z]) {
@@ -91,7 +126,9 @@ public class Controller extends Canvas implements KeyListener, MouseListener, Mo
         else if (keys[KeyEvent.VK_C]) {
             observer.angleX -= 0.1;
         }
+
         observer.updateDirection();
+
         if (keys[KeyEvent.VK_LEFT]) {
             speed.set(observer.direction);
             speed.rotateY(Math.toRadians(-90));
@@ -113,8 +150,6 @@ public class Controller extends Canvas implements KeyListener, MouseListener, Mo
         }
         observer.position.add(speed);
 
-        /*TODO: REMOVE FOR FINAL RELEASE, DEBUG MOVES ONLY*/
-
         if (keys[KeyEvent.VK_Q]) {
             observer.position.y -= 0.01;
         }
@@ -135,13 +170,12 @@ public class Controller extends Canvas implements KeyListener, MouseListener, Mo
         else if (keys[KeyEvent.VK_2]) {
             renderMode = 2;
         }
-
-
     }
 
     private void draw(Graphics2D g) {
         g.setBackground(backgroundColor);
         g.clearRect(0, 0, 800, 600);
+        // g.drawLine(0, 0, 800, 600);
 
         Area area = new Area();
 
@@ -149,44 +183,40 @@ public class Controller extends Canvas implements KeyListener, MouseListener, Mo
         g.scale(1, -1);
 
         if (renderMode == 1) {
+            //Composite oc = g.getComposite();
+            //g.setComposite(AlphaComposite.DstOver);            
             bspNode.transverse(observer, g);
+            //g.setComposite(oc);
         }
-        /*else {
-            for (Triangle triangle: WaveFrontParser.obj.faces) {
+        else {
+            //Collections.sort(WavefrontParser.obj.faces);
+            for (Triangle triangle : WavefrontParser.obj.faces) {
                 triangle.draw3D(g, observer);
             }
-        }*/
+        }
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Controller controller = new Controller();
-
+                Controller view = new Controller();
                 JFrame frame = new JFrame();
-
-                frame.setTitle("Space Partition! (Created by Niko Ayers and Jackson Meade)");
+                frame.setTitle("Java 3D BSP + Painter's Algorithm ");
                 frame.setSize(800, 600);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
-                frame.getContentPane().add(controller);
+                frame.getContentPane().add(view);
                 frame.setResizable(false);
                 frame.setVisible(true);
-
-                controller.requestFocus();
-
-                controller.start();
+                view.requestFocus();
+                view.start();
             }
         });
     }
 
-
-
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -199,33 +229,24 @@ public class Controller extends Canvas implements KeyListener, MouseListener, Mo
         keys[e.getKeyCode()] = false;
     }
 
+    // --- mouse
+
     private Vec2 mouseClicked = new Vec2();
     private Vec2 mouseDrag = new Vec2();
     private boolean mousePressed;
-    private double mousePressedPlayerAngleX;
-    private double mousePressedPlayerAngleY;
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        mouseDrag.set(e.getX(), e.getY());
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
+    private double mousePressedObserverAngleX;
+    private double mousePressedObserverAngleY;
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         mouseClicked.set(e.getX(), e.getY());
         mouseDrag.set(e.getX(), e.getY());
-        mousePressedPlayerAngleX = observer.angleX;
-        mousePressedPlayerAngleY = observer.angleY;
+        mousePressedObserverAngleX = observer.angleX;
+        mousePressedObserverAngleY = observer.angleY;
         mousePressed = true;
     }
 
@@ -236,11 +257,19 @@ public class Controller extends Canvas implements KeyListener, MouseListener, Mo
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
     }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        mouseDrag.set(e.getX(), e.getY());
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    }
+
 }

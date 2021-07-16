@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Leo
+ */
+
 public class Plane implements Serializable {
 
     public Vec3 normal;

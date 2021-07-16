@@ -1,21 +1,32 @@
 package importer;
 
-import engine.Triangle;
-import engine.Vec2;
-import engine.Vec3;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import engine.*;
 
+/**
+ *
+ * @author leonardo
+ */
 public class WavefrontParser {
+
+//    public static class Face {
+//        public Vec3[] vertex;
+//        public Vec3[] normal;
+//
+//        public Face(Vec3[] vertex, Vec3[] normal) {
+//            this.vertex = vertex;
+//            this.normal = normal;
+//        }
+//    }
 
     public static List<Vec3> vertices = new ArrayList<>();
     public static List<Vec3> normals = new ArrayList<>();
 
     public static Obj obj = new Obj();
-    public static List<Obj> objs = new ArrayList<>();
+    public static List<Obj> objs = new ArrayList<Obj>();
 
     public static void load(String resource, double scaleFactor) throws Exception {
         objs.clear();
@@ -24,8 +35,8 @@ public class WavefrontParser {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(WavefrontParser.class.getResourceAsStream(resource)));
         String line = null;
-
-        while((line = br.readLine()) != null) {
+        while ((line = br.readLine()) != null) {
+            //System.out.println(line);
             if (line.startsWith("v ")) {
                 extractVertex(line, vertices, scaleFactor);
             }
@@ -38,31 +49,37 @@ public class WavefrontParser {
         }
         br.close();
 
-
+//        int facesCount = 0;
+//        for (Obj obj : objs) {
+//            facesCount += obj.faces.size();
+//        }
+//        System.out.println("Faces count: " + facesCount);
+//
+//        return objs;
     }
+
     private static void extractVertex(String line, List<Vec3> vertices, double scaleFactor) {
         line = line.substring(2).trim();
         String[] v = line.split("\\ ");
-        Vec3 normal = new Vec3(
+        Vec3 vertex = new Vec3(
                 Double.parseDouble(v[0]),
                 Double.parseDouble(v[1]),
-                Double.parseDouble(v[2])
-
-        );
-        normals.add(normal);
+                Double.parseDouble(v[2]));
+        vertex.scale(scaleFactor);
+        vertices.add(vertex);
     }
+
     private static void extractVertexNormal(String line, List<Vec3> normals) {
         line = line.substring(3).trim();
         String[] v = line.split("\\ ");
         Vec3 normal = new Vec3(
                 Double.parseDouble(v[0]),
                 Double.parseDouble(v[1]),
-                Double.parseDouble(v[2])
-
-        );
+                Double.parseDouble(v[2]));
         normals.add(normal);
     }
-    private static void extractFace(String line, List<Vec3> vertices, List<Vec3 normals, Obj obj) {
+
+    private static void extractFace(String line, List<Vec3> vertices, List<Vec3> normals, Obj obj) {
         List<Triangle> faces = obj.faces;
         line = line.substring(2).trim();
         String[] v = line.split("\\ ");
@@ -112,10 +129,11 @@ public class WavefrontParser {
             faces.add(face);
             throw new RuntimeException("Wavefront with faces with more than 3 edges !");
         }
-
     }
+
     public static void main(String[] args) throws Exception {
-        load("/src/test.obj", 1);
+        load("/res/test.obj", 1);
         System.out.println(WavefrontParser.obj.faces.size());
     }
+
 }

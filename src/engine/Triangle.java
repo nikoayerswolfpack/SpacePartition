@@ -4,6 +4,10 @@ import java.awt.*;
 import java.io.Serializable;
 import bsp3d.*;
 
+/**
+ *
+ * @author Leo
+ */
 public class Triangle implements Serializable, Comparable<Triangle> {
 
     public Vec3 a;

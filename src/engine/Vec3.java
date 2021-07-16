@@ -2,6 +2,10 @@ package engine;
 
 import java.io.*;
 
+/**
+ *
+ * @author Leo
+ */
 public class Vec3 implements Serializable {
 
     public double x;
