@@ -1,0 +1,7 @@
+archetype.components.entrySet().stream()
+        .filter((map) -> map.getKey().equals("Transform") || map.getKey().equals("Player"))
+        .collect(Collectors.toMap(map -> map.getKey(), map ->  map.getValue()))
+        .forEach((str, comp) -> {
+            if (str == "Transform") ((Transform) comp).stopVelocity();
+            comp.update();
+        });
