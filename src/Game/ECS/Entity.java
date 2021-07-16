@@ -1,11 +1,13 @@
-package Game;
+package Game.ECS;
+
+import Game.ECS.EntityArchetype;
 
 /**
  * @author Nikolas Ayers
  */
 
 public abstract class Entity {
-    EntityArchetype archetype;
+    public EntityArchetype archetype;
 
     public Entity() {
 

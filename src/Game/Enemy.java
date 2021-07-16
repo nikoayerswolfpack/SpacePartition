@@ -1,8 +1,10 @@
 package Game;
 
 
+import Game.ECS.Entity;
+import Game.ECS.EntityArchetype;
 
-public class Enemy extends Entity{
+public class Enemy extends Entity {
 
     @Override
     public void create() {

@@ -1,10 +1,12 @@
 package Game;
 
+import Game.ECS.ComponentSystem;
+
 /**
  * @author Nikolas Ayers
  */
 
-public interface MainCharacterSystem extends ComponentSystem{
+public interface MainCharacterSystem extends ComponentSystem {
     int getHealth();
     void setHealth(int newHealth);
     int getSanity();

@@ -4,6 +4,8 @@ package Game;
 * @author Nikolas Ayers
  */
 
+import Game.ECS.*;
+
 import engine.Vec3;
 
 import java.time.*;

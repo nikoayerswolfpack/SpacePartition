@@ -1,10 +1,10 @@
 package Game;
 
+import Game.ECS.Entity;
+import Game.ECS.EntityArchetype;
 import engine.Vec3;
 
-import java.util.stream.Collectors;
-
-public class Player extends Entity{
+public class Player extends Entity {
 
     public Player(Vec3 startPos) {
         create();

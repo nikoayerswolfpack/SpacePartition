@@ -1,4 +1,4 @@
-package Game;
+package Game.ECS;
 
 /**
  * @author Nikolas Ayers

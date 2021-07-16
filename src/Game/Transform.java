@@ -4,6 +4,7 @@ package Game;
  * @author Nikolas Ayers
  */
 
+import Game.ECS.Component;
 import engine.*;
 
 public class Transform extends Component implements TransformSystem {

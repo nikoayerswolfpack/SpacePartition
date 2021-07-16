@@ -1,5 +1,7 @@
 package Game;
 
+import Game.ECS.Component;
+
 public class Collider extends Component implements ColliderSystem{
     CollisionMesh[] meshes;
 

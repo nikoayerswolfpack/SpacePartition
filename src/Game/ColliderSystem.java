@@ -1,5 +1,7 @@
 package Game;
 
-public interface ColliderSystem extends ComponentSystem{
+import Game.ECS.ComponentSystem;
+
+public interface ColliderSystem extends ComponentSystem {
 
 }

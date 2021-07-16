@@ -1,4 +1,4 @@
-package Game;
+package Game.ECS;
 
 /**
  * @author Nikolas Ayers
@@ -6,7 +6,7 @@ package Game;
 
 import java.util.Hashtable;
 
-public abstract class Component implements ComponentSystem{
+public abstract class Component implements ComponentSystem {
 
     public Hashtable<String, Boolean> EntityAction = new Hashtable<>();
 

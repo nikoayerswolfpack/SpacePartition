@@ -1,5 +1,7 @@
 package Game;
 
+import Game.ECS.Component;
+
 /**
  * @author Nikolas Ayers
  */

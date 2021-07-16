@@ -1,14 +1,17 @@
-package Game;
+package Game.ECS;
 
 /**
  * @author Nikolas Ayers
  */
 
+import Game.MainCharacter;
+import Game.Transform;
+
 import java.util.Hashtable;
 
 public class EntityArchetype {
 
-    Hashtable<String, Component> components = new Hashtable<String, Component>();
+    public Hashtable<String, Component> components = new Hashtable<String, Component>();
 
     public EntityArchetype(String... compToAdd) {
         assemble(compToAdd);

@@ -1,5 +1,6 @@
 package Game;
 
+import Game.ECS.ComponentSystem;
 import engine.Vec3;
 
 public interface TransformSystem extends ComponentSystem {
