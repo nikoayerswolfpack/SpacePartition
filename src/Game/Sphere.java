@@ -1,6 +1,6 @@
 package Game;
 
-public class Sphere extends CollisionMesh{
+public class Sphere extends CollisionMesh {
     double radius;
 
     public Sphere(double radius) {
