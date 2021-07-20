@@ -135,44 +135,12 @@ public class Box extends CollisionMesh {
 
                 }
                 return flags[0] && flags[1] && flags[2];
+            case("Sphere"):
+                return ((Sphere) mesh).collision(this);
             default:
                 return false;
         }
     }
 
-    private int indexOfSmallest(double[] array){
 
-        // add this
-        if (array.length == 0)
-            return -1;
-
-        int index = 0;
-        double min = array[index];
-
-        for (int i = 1; i < array.length; i++){
-            if (array[i] <= min){
-                min = array[i];
-                index = i;
-            }
-        }
-        return index;
-    }
-
-    private int indexOfLargest(double[] array){
-
-        // add this
-        if (array.length == 0)
-            return -1;
-
-        int index = 0;
-        double max = array[index];
-
-        for (int i = 1; i < array.length; i++){
-            if (array[i] >= max){
-                max = array[i];
-                index = i;
-            }
-        }
-        return index;
-    }
 }

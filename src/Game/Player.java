@@ -35,6 +35,8 @@ public class Player extends Entity {
     public void onUpdate() {
 
         Transform myTransform = (Transform) archetype.getComponent("Transform");
+        Collider collider = (Collider) archetype.getComponent("Collider");
+        collider.update(myTransform.velocity);
         archetype.components.forEach((str, comp) -> {
             comp.update();
         });

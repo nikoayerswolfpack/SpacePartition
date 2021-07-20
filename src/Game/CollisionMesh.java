@@ -46,6 +46,41 @@ public abstract class CollisionMesh {
         return penetrationDepth > 0;
         }
 
+    public static int indexOfSmallest(double[] array){
+
+        // add this
+        if (array.length == 0)
+            return -1;
+
+        int index = 0;
+        double min = array[index];
+
+        for (int i = 1; i < array.length; i++){
+            if (array[i] <= min){
+                min = array[i];
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    public static int indexOfLargest(double[] array){
+
+        // add this
+        if (array.length == 0)
+            return -1;
+
+        int index = 0;
+        double max = array[index];
+
+        for (int i = 1; i < array.length; i++){
+            if (array[i] >= max){
+                max = array[i];
+                index = i;
+            }
+        }
+        return index;
+    }
 
     public void updateColliderPosition(Vec3 relativeTranslate) {
         for (Vec3 volumePoint : volumePoints) {
