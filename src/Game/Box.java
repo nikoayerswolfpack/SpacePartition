@@ -90,7 +90,6 @@ public class Box extends CollisionMesh {
                 Vec3[] myAxes = new Vec3[3];
                 boolean[] flags = new boolean[3];
                 for (int i = 0; i < 3; i++) {
-                    myAxes[i + 8] = this.volumePoints[i + 8];
 
                     Vec3[] myPoints_projected = new Vec3[8];
                     double[] myPoints_projected_length = new double[8];
