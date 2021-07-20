@@ -30,6 +30,14 @@ public abstract class CollisionMesh {
         return returnA;
     }
 
+    public static Vec3 cross(Vec3 p1, Vec3 p2) {
+        return new Vec3(
+                p1.y * p2.z - p1.z * p2.y,
+                p1.z * p2.x - p1.x * p2.z,
+                p1.x * p2.y - p1.y * p2.x
+        );
+    }
+
     public static boolean SphereCollision(Sphere s1, Sphere s2) {
         Vec3 penetrationNormal = new Vec3(s1.center);
         penetrationNormal.sub(s2.center);
