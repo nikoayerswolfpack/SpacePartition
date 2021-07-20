@@ -1,5 +1,9 @@
 package Game;
 
+/**
+ * @author Nikolas Ayers
+ */
+
 import engine.Vec3;
 
 public abstract class CollisionMesh {
@@ -11,8 +15,6 @@ public abstract class CollisionMesh {
         difference.sub(b);
         return difference.getLength();
     }
-
-
 
     public static Vec3 ClosestPointOnLineSegment(Vec3 A, Vec3 B, Vec3 Point)
     {
@@ -43,8 +45,6 @@ public abstract class CollisionMesh {
             volumePoint.add(center);
         }
     }
-
-
 
     public abstract boolean collision(CollisionMesh mesh);
 

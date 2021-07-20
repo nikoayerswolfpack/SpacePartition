@@ -1,5 +1,9 @@
 package Game;
 
+/**
+ * @author Nikolas Ayers
+ */
+
 import Game.ECS.Component;
 
 public class Collider extends Component implements ColliderSystem{

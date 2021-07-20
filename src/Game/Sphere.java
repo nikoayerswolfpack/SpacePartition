@@ -1,5 +1,9 @@
 package Game;
 
+/**
+ * @author Nikolas Ayers
+ */
+
 import engine.Vec3;
 
 public class Sphere extends CollisionMesh {
