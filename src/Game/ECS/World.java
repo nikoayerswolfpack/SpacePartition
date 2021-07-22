@@ -11,6 +11,7 @@ import engine.Vec3;
 
 import java.awt.event.*;
 import java.time.*;
+import java.util.Set;
 
 public class World {
     public static float deltaTime = 0.0f;
@@ -39,7 +40,7 @@ public class World {
     public void start() {
         Player player = new Player(startPosition, startRotation);
 
-        colliderEntities = new EntityQuery<Collider>(this);
+        colliderEntities = new EntityQuery(this, Collider.class);
     }
 
     public void end() {
@@ -59,8 +60,8 @@ public class World {
                 destroy(entity);
             }
         }
-        for ( Object entity : colliderEntities.entities) {
-
+        for ( int indices : colliderEntities.results) {
+            entities[indices] // TODO: MODIFY ENTITY THAT HAS COLLIDER COMPONENT
         }
         deltaTimeDuration = Duration.between(beginTime, Instant.now());
         deltaTime = (float) deltaTimeDuration.toMillis();

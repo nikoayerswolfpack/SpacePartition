@@ -3,21 +3,25 @@ package Game.ECS;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Set;
 
-public class EntityQuery<T extends Component> {
+public class EntityQuery {
 
-    ArrayList<Entity> entities;
     World world;
-    private Class<T> type;
+    public ArrayList<Integer> results;
 
-    public EntityQuery(World world) {
+    public EntityQuery(World world, Class... S) {
         this.world = world;
-        type = (Class<T>)( (ParameterizedType) getClass().getGenericSuperclass() ).getActualTypeArguments()[0]; // TODO: MAKE SURE THIS WORKS
-        for (Entity entity : world.entities) {
-            if (entity.archetype.hasComponent(type.getSimpleName())) {
-                entities.add(entity);
+        entityIsValid: for (Entity entity : world.entities) {
+            for (Class component : S) {
+                if (!entity.archetype.hasComponent(component.getClass().getSimpleName())) {
+                    break entityIsValid;
+                }
             }
+            results.add(entity.entityIndex);
         }
+
     }
 
 }
