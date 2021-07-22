@@ -11,12 +11,7 @@ public class Player extends Entity {
 
 
     public Player(Vec3 startPos, Vec3 startRot) {
-        super(startPos, startRot);
-    }
-
-    @Override
-    public void create() {
-        archetype = new EntityArchetype(World.player);
+        super(World.player, startPos, startRot);
     }
 
     @Override

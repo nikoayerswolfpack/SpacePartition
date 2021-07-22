@@ -10,12 +10,7 @@ import engine.Vec3;
 public class Enemy extends Entity {
 
     public Enemy(Vec3 startPos, Vec3 startRot) {
-        super(startPos, startRot);
-    }
-
-    @Override
-    public void create() {
-        archetype = new EntityArchetype(World.enemy);
+        super(World.enemy, startPos, startRot);
     }
 
     @Override

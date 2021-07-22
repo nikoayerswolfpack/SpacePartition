@@ -1,0 +1,14 @@
+for ( Entity entity : colliderEntities.results) {
+            colliderEntities.results.forEach((other) -> {
+                if (entity != other) {
+                    if (CollisionMesh.distance(
+                            ((Transform) entity.archetype.getComponent("Transform")).pos,
+                            (((Transform) other.archetype.getComponent("Transform")).pos)) < 5.0) {
+                        ((Collider) entity.archetype.getComponent("Collider")).update(
+                                ((Collider) other.archetype.getComponent("Collider"))
+                        );
+                    }
+                }
+            });
+
+        }

@@ -4,9 +4,8 @@ package Game.ECS;
 * @author Nikolas Ayers
  */
 
-import Game.Level;
+import Game.*;
 import Game.Physics.*;
-import Game.Player;
 import engine.Vec3;
 
 import java.awt.event.*;

@@ -1,6 +1,7 @@
 package Game;
 
 import Game.ECS.Component;
+import Game.ECS.Entity;
 
 /**
  * @author Nikolas Ayers
@@ -12,7 +13,15 @@ public class MainCharacter extends Component implements MainCharacterSystem {
     int bullets;
     int MAX_HEALTH = 100;
     int MAX_BULLETS = 200;
+    int FULL_SANITY = 100;
 
+    public MainCharacter() {
+        super();
+    }
+
+    public MainCharacter(Entity parent) {
+        super(parent);
+    }
 
 
     @Override

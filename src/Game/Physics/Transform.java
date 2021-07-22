@@ -5,6 +5,7 @@ package Game.Physics;
  */
 
 import Game.ECS.Component;
+import Game.ECS.Entity;
 import Game.ECS.World;
 import engine.*;
 
@@ -13,6 +14,14 @@ public class Transform extends Component implements TransformSystem {
     public Vec3 rot;
     public Vec3 velocity;
     public Vec3 omega;
+
+    public Transform() {
+        super();
+    }
+
+    public Transform(Entity parent) {
+        super(parent);
+    }
 
 
     @Override
