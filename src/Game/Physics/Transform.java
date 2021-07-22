@@ -5,7 +5,7 @@ package Game.Physics;
  */
 
 import Game.ECS.Component;
-import Game.World;
+import Game.ECS.World;
 import engine.*;
 
 public class Transform extends Component implements TransformSystem {

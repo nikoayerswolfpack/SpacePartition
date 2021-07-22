@@ -5,7 +5,9 @@ package Game.ECS;
  */
 
 import Game.MainCharacter;
+import Game.Physics.Collider;
 import Game.Physics.Transform;
+import Game.SpawnComponent;
 
 import java.util.Hashtable;
 
@@ -32,6 +34,12 @@ public class EntityArchetype {
                     break;
                 case ("MainCharacter"):
                     components.put("MainCharacter", new MainCharacter());
+                    break;
+                case ("Collider"):
+                    components.put("Collider", new Collider());
+                    break;
+                case ("SpawnComponent"):
+                    components.put("SpawnComponent", new SpawnComponent());
                 //TODO: ADD COMPONENTS
                 default:
                     //Do nothing.
@@ -56,4 +64,6 @@ public class EntityArchetype {
     public Component getComponent(String componentName) {
         return components.get(componentName);
     }
+
+    public boolean hasComponent(String componentName) { return (getComponent(componentName) != null); }
 }

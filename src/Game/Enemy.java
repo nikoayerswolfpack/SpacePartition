@@ -3,9 +3,15 @@ package Game;
 
 import Game.ECS.Entity;
 import Game.ECS.EntityArchetype;
+import Game.ECS.World;
 import Game.Physics.Transform;
+import engine.Vec3;
 
 public class Enemy extends Entity {
+
+    public Enemy(Vec3 startPos, Vec3 startRot) {
+        super(startPos, startRot);
+    }
 
     @Override
     public void create() {
@@ -13,8 +19,10 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public void onSpawn() {
-
+    public void onSpawn(Vec3 startPos, Vec3 startRot) {
+        Transform enemyTransform = (Transform) archetype.getComponent("Transform");
+        enemyTransform.setPosition(startPos);
+        enemyTransform.setRotation(startRot);
     }
 
     @Override

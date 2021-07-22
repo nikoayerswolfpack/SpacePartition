@@ -23,5 +23,5 @@ public class Level {
     public void spawnEnemy() {
       //TODO: make enemy, entity, eventspawner
     }
-
+    //TODO: STORE INITIAL POSITIONS FOR ENTITIES BASED ON LEVEL
 }

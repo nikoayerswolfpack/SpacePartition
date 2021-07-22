@@ -14,7 +14,9 @@ public abstract class Component implements ComponentSystem {
     public boolean canMakeAction(String action) {
         return EntityAction.get(action);
     }
+
     public abstract void start();
+
     public abstract void update();
 
 }
