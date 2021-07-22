@@ -9,7 +9,7 @@ import java.util.Set;
 public class EntityQuery {
 
     World world;
-    public ArrayList<Integer> results;
+    public ArrayList<Entity> results;
 
     public EntityQuery(World world, Class... S) {
         this.world = world;
@@ -19,7 +19,7 @@ public class EntityQuery {
                     break entityIsValid;
                 }
             }
-            results.add(entity.entityIndex);
+            results.add(entity);
         }
 
     }

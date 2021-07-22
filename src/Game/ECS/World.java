@@ -11,6 +11,7 @@ import engine.Vec3;
 
 import java.awt.event.*;
 import java.time.*;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class World {
@@ -18,7 +19,7 @@ public class World {
     Duration deltaTimeDuration = Duration.ZERO;
     Instant beginTime = Instant.now();
     Level[] levels;
-    Entity[] entities;
+    ArrayList<Entity> entities;
     Vec3 startPosition = new Vec3(0, 0, 0);
     Vec3 startRotation = new Vec3(0, 0, 0);
 
@@ -34,7 +35,7 @@ public class World {
 
 
     public void destroy(Entity entity) {
-        entities[entity.entityIndex] = null;
+        entities.remove(entity);
     }
 
     public void start() {
@@ -60,8 +61,8 @@ public class World {
                 destroy(entity);
             }
         }
-        for ( int indices : colliderEntities.results) {
-            entities[indices] // TODO: MODIFY ENTITY THAT HAS COLLIDER COMPONENT
+        for ( Entity entity : colliderEntities.results) {
+            entity
         }
         deltaTimeDuration = Duration.between(beginTime, Instant.now());
         deltaTime = (float) deltaTimeDuration.toMillis();

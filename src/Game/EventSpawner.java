@@ -32,7 +32,7 @@ public class EventSpawner extends Entity {
     @Override
     public void onUpdate() {
         Collider eventSpawnerCollider = (Collider) archetype.getComponent("Collider");
-        eventSpawnerCollider.update()
+        eventSpawnerCollider.update();
     }
 
 

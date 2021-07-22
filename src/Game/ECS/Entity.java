@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 
 public abstract class Entity {
     public EntityArchetype archetype;
-    public int entityIndex;
     public EntityState state;
 
     public Entity(Vec3 startPos, Vec3 startRot) {
