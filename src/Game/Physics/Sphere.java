@@ -1,4 +1,4 @@
-package Game;
+package Game.Physics;
 
 /**
  * @author Nikolas Ayers
@@ -31,7 +31,7 @@ public class Sphere extends CollisionMesh {
                     Vec3[] otherPoints_projected = new Vec3[2];
                     double[] otherPoints_projected_length = new double[2];
 
-                    for (int j = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
                         myPoints_projected[j] = new Vec3(volumePoints[i + 8]);
                         myPoints_projected[j].scale(2);
                         double dist = myPoints_projected[j].dot(volumePoints[j]);

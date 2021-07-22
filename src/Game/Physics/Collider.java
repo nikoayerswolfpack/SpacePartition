@@ -1,10 +1,11 @@
-package Game;
+package Game.Physics;
 
 /**
  * @author Nikolas Ayers
  */
 
 import Game.ECS.Component;
+import Game.World;
 import engine.Vec3;
 
 import java.util.ArrayList;
@@ -16,9 +17,7 @@ public class Collider extends Component implements ColliderSystem {
 
     public Collider(boolean isStatic, CollisionMesh... meshSet) {
         meshes = new CollisionMesh[meshSet.length];
-        for (int i = 0; i < meshSet.length; i++) {
-            meshes[i] = meshSet[i];
-        }
+        meshes = meshSet;
         this.isStatic = isStatic;
         start();
     }

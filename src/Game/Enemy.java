@@ -3,6 +3,7 @@ package Game;
 
 import Game.ECS.Entity;
 import Game.ECS.EntityArchetype;
+import Game.Physics.Transform;
 
 public class Enemy extends Entity {
 

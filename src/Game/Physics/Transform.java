@@ -1,10 +1,11 @@
-package Game;
+package Game.Physics;
 
 /**
  * @author Nikolas Ayers
  */
 
 import Game.ECS.Component;
+import Game.World;
 import engine.*;
 
 public class Transform extends Component implements TransformSystem {

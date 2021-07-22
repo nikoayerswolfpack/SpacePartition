@@ -1,4 +1,4 @@
-package Game;
+package Game.Physics;
 
 import Game.ECS.ComponentSystem;
 import engine.Vec3;

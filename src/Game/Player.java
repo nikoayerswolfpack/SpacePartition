@@ -2,6 +2,8 @@ package Game;
 
 import Game.ECS.Entity;
 import Game.ECS.EntityArchetype;
+import Game.Physics.Collider;
+import Game.Physics.Transform;
 import engine.Vec3;
 
 public class Player extends Entity {

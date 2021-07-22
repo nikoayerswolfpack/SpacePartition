@@ -1,10 +1,8 @@
-package Game;
+package Game.Physics;
 
 
 import engine.Triangle;
 import engine.Vec3;
-
-import java.util.List;
 
 public class Box extends CollisionMesh {
     Triangle[] triangles = new Triangle[12];
@@ -96,7 +94,7 @@ public class Box extends CollisionMesh {
                     Vec3[] otherPoints_projected = new Vec3[8];
                     double[] otherPoints_projected_length = new double[8];
 
-                    for (int j = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
                         myPoints_projected[j] = new Vec3(volumePoints[i + 8]);
                         myPoints_projected[j].scale(2);
                         double dist = myPoints_projected[j].dot(volumePoints[j]);
@@ -105,7 +103,7 @@ public class Box extends CollisionMesh {
 
                         myPoints_projected_length[j] = myPoints_projected[j].getLength();
                     }
-                    for (int j = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
                         otherPoints_projected[j] = new Vec3(volumePoints[i + 8]);
                         otherPoints_projected[j].scale(2);
                         double dist = myPoints_projected[j].dot(((Box) mesh).volumePoints[j]);

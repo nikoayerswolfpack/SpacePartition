@@ -5,13 +5,13 @@ package Game.ECS;
  */
 
 import Game.MainCharacter;
-import Game.Transform;
+import Game.Physics.Transform;
 
 import java.util.Hashtable;
 
 public class EntityArchetype {
 
-    public Hashtable<String, Component> components = new Hashtable<String, Component>();
+    public Hashtable<String, Component> components = new Hashtable<>();
 
     public EntityArchetype(String... compToAdd) {
         assemble(compToAdd);
