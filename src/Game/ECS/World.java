@@ -56,13 +56,23 @@ public class World {
         for ( Entity entity : entities) {
             if (entity.state == EntityState.ALIVE) {
                 entity.onUpdate();
-            }
-            else {
+            } else {
                 destroy(entity);
             }
         }
         for ( Entity entity : colliderEntities.results) {
-            entity
+            colliderEntities.results.forEach((other) -> {
+                if (entity != other) {
+                    if (CollisionMesh.distance(
+                            ((Transform) entity.archetype.getComponent("Transform")).pos,
+                            (((Transform) other.archetype.getComponent("Transform")).pos)) < 5.0) {
+                        ((Collider) entity.archetype.getComponent("Collider")).update(
+                                ((Collider) other.archetype.getComponent("Collider"))
+                        );
+                    }
+                }
+            });
+
         }
         deltaTimeDuration = Duration.between(beginTime, Instant.now());
         deltaTime = (float) deltaTimeDuration.toMillis();
