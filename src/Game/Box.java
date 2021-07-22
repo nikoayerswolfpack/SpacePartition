@@ -137,6 +137,43 @@ public class Box extends CollisionMesh {
                 return flags[0] && flags[1] && flags[2];
             case("Sphere"):
                 return ((Sphere) mesh).collision(this);
+            case("Capsule"):
+
+                Capsule a_s = ((Capsule) mesh);
+
+                Vec3 aNormal_s = new Vec3(a_s.volumePoints[1]);
+                aNormal_s.sub(a_s.volumePoints[0]);
+                aNormal_s.normalize();
+
+                Vec3 lineEndOffsetA_s = new Vec3(aNormal_s);
+                lineEndOffsetA_s.scale(a_s.radius);
+
+                Vec3 firstCoreA_s = new Vec3(lineEndOffsetA_s);
+                firstCoreA_s.add(a_s.volumePoints[0]);
+                Vec3 firstCoreB_s = new Vec3(a_s.volumePoints[1]);
+                firstCoreB_s.sub(lineEndOffsetA_s);
+
+                Vec3 v0_s = new Vec3(this.center);
+                v0_s.sub(firstCoreA_s);
+                Vec3 v1_s = new Vec3(this.center);
+                v1_s.sub(firstCoreB_s);
+
+                double d0_s = v0_s.dot(v0_s);
+                double d1_s = v1_s.dot(v1_s);
+
+
+                Vec3 bestSphereInA_s;
+                if (d0_s > d1_s) {
+                    bestSphereInA_s = firstCoreB_s;
+                } else {
+                    bestSphereInA_s = firstCoreA_s;
+                }
+
+                Vec3 bestSphereInB_s = ClosestPointOnLineSegment(this.center, this.center, bestSphereInA_s);
+
+                bestSphereInA_s = ClosestPointOnLineSegment(firstCoreA_s, firstCoreB_s, bestSphereInB_s);
+                Sphere bestA_s = new Sphere(a_s.radius, bestSphereInA_s);
+                return bestA_s.collision(this);
             default:
                 return false;
         }

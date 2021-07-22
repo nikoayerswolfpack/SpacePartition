@@ -34,6 +34,7 @@ public class Player extends Entity {
     @Override
     public void onUpdate() {
 
+
         Transform myTransform = (Transform) archetype.getComponent("Transform");
         Collider collider = (Collider) archetype.getComponent("Collider");
         collider.update(myTransform.velocity);

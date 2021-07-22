@@ -127,7 +127,8 @@ public class Capsule extends CollisionMesh {
                 Sphere bestA = new Sphere(a.radius, bestSphereInA);
                 Sphere bestB = new Sphere(b.radius, bestSphereInB);
                 return SphereCollision(bestA, bestB);
-
+            case ("Box"):
+                return ((Box) mesh).collision(this);
             default:
                 return false;
         }
